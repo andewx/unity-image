@@ -12,7 +12,7 @@ Installs `./img2sphere` in your `/usr/local/bin` `$GOBIN` path
 
 ## Usage
 
-![Example](https://github.com/andewx/img2sphere/output.png)
+![Example](example.png)
 
 Once the tool is installed you can use this tool to map rectilinear texturest to hemispheric conformal projections.
 
