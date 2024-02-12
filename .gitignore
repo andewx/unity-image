@@ -1,0 +1,11 @@
+# ignore any image files which aren't example.png
+*.png
+!example.png
+
+#ignore all .txt files in the root directory
+*.txt
+
+#ignore binary file
+img2sphere
+
+
