@@ -2,6 +2,21 @@
 
 Thanks for visiting, this is a golang utility for working with recti-linear textures and images that we would like to project stereographically with a conformal mapping.
 
+The tool works with a process in unwrapping in blender where we would take the following steps:
+
+1. Add a UV Sphere
+2. Enter Edit Mode
+3. Alt + Left Click to Select Edge Loop Around the Equator
+4. Edges -> Mark Seam
+5. Enter UV Editor
+6. Ctrl + A Select all Sphere Points
+7. U Unwrap Vertices (Should give us a hemisphere)
+
+By apply default mode conformal projection (linear) to a rectilinear texture we can map it to this sphere without any distortion. Note that on a disk:
+
+$$ dA = dr^2 \theta $$
+
+
 ## installation
 
 ```
