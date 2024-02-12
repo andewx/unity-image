@@ -14,12 +14,12 @@ const CS_RED = "\033[31m"
 
 func help() {
 	fmt.Printf("%sUsage: img2sphere <input.png> <output.png> <options>\n", CS_RED)
-	fmt.Printf("%sThis tool maps a 2D image to a disk hemisphere projection accepts PNG files only, default mode is a linear based projection\n", CS_RESET)
+	fmt.Printf("%sThis tool maps a 2D image to a disk hemisphere projection accepts PNG files only, default mode is a linear based projection scheme which should map correctly for spheres\n", CS_RESET)
 	fmt.Printf("%sOptions:\n-h\tShow help\n-s\t<float> set scale mapping\n-l\tLog uv mapping calculations to file\n-c\t cubic mode\n-q\t quadratic mode\n-ln logarithmic mode\n-x exponential mode\n", CS_RESET)
 }
 
 func main() {
-	fmt.Printf("%s%s%s\n", CS_GREEN, "img2disk\n", CS_RESET)
+	fmt.Printf("%s%s%s\n", CS_GREEN, "img2sphere\n", CS_RESET)
 	if len(os.Args) < 3 {
 		help()
 		os.Exit(1)

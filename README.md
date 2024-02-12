@@ -23,7 +23,7 @@ Once the tool is installed you can use this tool to map rectilinear texturest to
 Our tool supports three mappings which refer to the equatorial spherical distortion:
 
 1. Linear Magnitude projection - where the equatorial distorition is linear [default]
-2. Quadratic - $x^2$ projection [-q]
+2. Quadratic - $x^2$ projection [-q]. This will stretch the texture by a factor along its mapped radial
 3. Cubic - $x^3$ projection [-c]
 4. Log - natural log projection [-ln]
 5. Exp - Exponential projection. [-x]
