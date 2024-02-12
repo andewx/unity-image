@@ -47,13 +47,13 @@ To use simply use any of these options.
 
 ## Options
 
--h - Shows help
--s - Set scale
--l - Log uv mapping transforms
--c - cubic mode
--q - quadratic mode
--ln - log mode
--x - exponential mode
+- h - Shows help
+- s (float) - Set scale
+- l - Log uv mapping transforms
+- c - cubic mode
+- q - quadratic mode
+- ln - log mode
+- x - exponential mode
 
 
 ## Support
