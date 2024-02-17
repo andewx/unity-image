@@ -5,7 +5,7 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/andewx/imgTool/tool"
+	"github.com/andewx/dlxImg/tool"
 )
 
 const CS_GREEN = "\033[32m"
@@ -13,13 +13,13 @@ const CS_RESET = "\033[0m"
 const CS_RED = "\033[31m"
 
 func help() {
-	fmt.Printf("%sUsage: imgTool <options>\n", CS_RED)
-	fmt.Printf("%sThis tool maps a 2D image to a disk hemisphere projection accepts PNG files only, default mode is a linear based projection scheme which should map correctly for spheres\n", CS_RESET)
+	fmt.Printf("%sUsage: dlxImg <options>\n", CS_RED)
+	fmt.Printf("%sImaging editor tools package includes stereographic mapping, and 3D editor PBR mask generation\n", CS_RESET)
 	fmt.Printf("%sOptions:\n-h\tShow help\n-s\t<float> set scale mapping\n-l\tLog uv mapping calculations to file\n-c\t cubic mode\n-q\t quadratic mode\n-ln logarithmic mode\n-x exponential mode\n-umask unity pbr mask file from metallic (r), ambient (g), detail (b), smoothness (a)", CS_RESET)
 }
 
 func main() {
-	fmt.Printf("%s%s%s\n", CS_GREEN, "img2sphere\n", CS_RESET)
+	fmt.Printf("%s%s%s\n", CS_GREEN, "dlxImg\n", CS_RESET)
 	if len(os.Args) < 3 {
 		help()
 		os.Exit(1)

@@ -1,3 +1,3 @@
-module github.com/andewx/imgTool
+module github.com/andewx/dlxImg
 
 go 1.19
