@@ -2,6 +2,7 @@ package tool
 
 import (
 	"image"
+	"image/color"
 	"image/png"
 	"log"
 	"math"
@@ -21,6 +22,7 @@ const MODE_CUBIC = 1
 const MODE_LINEAR = 2
 const MODE_LOG = 3
 const MODE_EXP = 4
+const MODE_UNITY_MASK = 5
 
 var logEnabled = false
 
@@ -66,7 +68,13 @@ func (img *Image) Save(output string) error {
 }
 
 // Map 2D image to disk hemishphere projection , here we preserve the angle
-func (img *Image) MapToHemisphere(w float64, mode int) *Image {
+func MapToHemisphere(w float64, mode int, file string, output string) {
+
+	img, err := OpenImage(file)
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	bounds := img.Image.Bounds()
 	width := bounds.Max.X
 	height := bounds.Max.Y
@@ -144,7 +152,13 @@ func (img *Image) MapToHemisphere(w float64, mode int) *Image {
 
 	defer img.file.Close()
 
-	return &Image{Image: hemi, filename: img.filename}
+	out := &Image{Image: hemi, filename: img.filename}
+	err = out.Save(output)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
 }
 
 func clamp(x, min, max float64) float64 {
@@ -159,4 +173,65 @@ func clamp(x, min, max float64) float64 {
 
 func repeat(x, min, max float64) float64 {
 	return min + math.Mod(x-min, max-min)
+}
+
+func CreateUnityDetailMask(metallic_file string, ambient_file string, detail_file string, smoothness_file string, output_file string) {
+	//Open all images provided
+	metallic, err := OpenImage(metallic_file)
+	if err != nil {
+		log.Fatal(err)
+	}
+	ambient, err := OpenImage(ambient_file)
+	if err != nil {
+		log.Fatal(err)
+	}
+	detail, err := OpenImage(detail_file)
+	if err != nil {
+		log.Fatal(err)
+	}
+	smoothness, err := OpenImage(smoothness_file)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	//Check all images have same bounds
+	if metallic.Image.Bounds() != ambient.Image.Bounds() || metallic.Image.Bounds() != detail.Image.Bounds() || metallic.Image.Bounds() != smoothness.Image.Bounds() {
+		log.Fatal("All images must have the same bounds")
+	}
+
+	//Create new combined image
+	bounds := metallic.Image.Bounds()
+
+	unity_detail := image.NewRGBA(image.Rect(0, 0, bounds.Max.X, bounds.Max.Y))
+
+	//Iterate over all pixels and combine the images
+	for i := 0; i < bounds.Max.X; i++ {
+		for j := 0; j < bounds.Max.Y; j++ {
+			//Get pixel luminance from each image
+			metallic_pixel := Luminance(metallic.Image.At(i, j))
+			ambient_pixel := Luminance(ambient.Image.At(i, j))
+			detail_pixel := Luminance(detail.Image.At(i, j))
+			smoothness_pixel := Luminance(smoothness.Image.At(i, j))
+
+			//Create combined pixel from the luminance values
+			pixel := color.RGBA{uint8(metallic_pixel * 255), uint8(ambient_pixel * 255), uint8(detail_pixel * 255), uint8(smoothness_pixel * 255)}
+
+			//Combine the images
+			unity_detail.Set(i, j, pixel)
+		}
+	}
+
+	img := Image{Image: unity_detail, filename: output_file}
+
+	//Save the combined image
+	err = img.Save(output_file)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+}
+
+func Luminance(c color.Color) float64 {
+	r, g, b, _ := c.RGBA()
+	return 0.2126*float64(r) + 0.7152*float64(g) + 0.0722*float64(b)
 }
