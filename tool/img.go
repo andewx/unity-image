@@ -232,9 +232,11 @@ func CreateUnityDetailMask(metallic_file string, ambient_file string, detail_fil
 }
 
 func Luminance(c color.Color) float64 {
-	//Normalize 0-255 and return the square magnitude of the color
-	r, g, b, _ := c.RGBA()
-	rf, gf, bf := float64(r)*0.003921568*0.3, float64(g)*0.003921568*0.59, float64(b)*0.003921568*0.11
-	l := math.Sqrt(rf*rf + gf*gf + bf*bf)
+	//Assume that the color is in grayscale space
+	pixel := color.Gray16Model.Convert(c)
+
+	//Get the luminance value
+	l := float64(pixel.(color.Gray16).Y) / 65535.0
+
 	return l
 }
