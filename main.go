@@ -15,7 +15,7 @@ const CS_RED = "\033[31m"
 func help() {
 	fmt.Printf("%sUsage: dlxImg <options>\n", CS_RED)
 	fmt.Printf("%sImaging editor tools package includes stereographic mapping, and 3D editor PBR mask generation\n", CS_RESET)
-	fmt.Printf("%sOptions:\n-h\tShow help\n-s\t<float> set scale mapping\n-l\tLog uv mapping calculations to file\n-c\t cubic mode\n-q\t quadratic mode\n-ln logarithmic mode\n-x exponential mode\n-umask unity pbr mask file from metallic (r), ambient (g), detail (b), smoothness (a)", CS_RESET)
+	fmt.Printf("%sOptions:\n-h\tShow help\n-s\t<float> set scale mapping\n-l\tLog uv mapping calculations to file\n-c\t cubic mode\n-q\t quadratic mode\n-ln logarithmic mode\n-x exponential mode\n-umask unity pbr mask file from metallic (r), ambient (g), smoothness (b), alpha (a)", CS_RESET)
 }
 
 func main() {

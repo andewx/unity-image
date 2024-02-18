@@ -214,7 +214,7 @@ func CreateUnityDetailMask(metallic_file string, ambient_file string, detail_fil
 			smoothness_pixel := Luminance(smoothness.Image.At(i, j))
 
 			//Create combined pixel from the luminance values
-			pixel := color.RGBA{uint8(metallic_pixel * 255), uint8(ambient_pixel * 255), uint8(detail_pixel * 255), uint8(smoothness_pixel * 255)}
+			pixel := color.RGBA{uint8(metallic_pixel * 255), uint8(ambient_pixel * 255), uint8(smoothness_pixel * 255), uint8(detail_pixel * 255)}
 
 			//Combine the images
 			unity_detail.Set(i, j, pixel)
