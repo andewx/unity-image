@@ -184,10 +184,11 @@ func CreateFlipbookTextures(rows int, cols int, height int, width int, files []s
 		if err != nil {
 			log.Fatal(err)
 		}
-
-		if img.Image.Bounds().Max.X != width || img.Image.Bounds().Max.Y != height {
-			log.Fatal("All images must have the same bounds")
-		}
+		/*
+			if img.Image.Bounds().Max.X != width || img.Image.Bounds().Max.Y != height {
+				log.Fatal("All images must have the same bounds")
+			}
+		*/
 		images[i] = *img
 	}
 
