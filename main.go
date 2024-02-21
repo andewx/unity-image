@@ -15,7 +15,7 @@ const CS_RED = "\033[31m"
 func help() {
 	fmt.Printf("%sUsage: dlxImg <options>\n", CS_RED)
 	fmt.Printf("%sImaging editor tools package includes stereographic mapping, and 3D editor PBR mask generation\n", CS_RESET)
-	fmt.Printf("%sOptions:\n-h\tShow help\n-s\t<float> set scale mapping\n-l\tLog uv mapping calculations to file\n-c\t cubic mode\n-q\t quadratic mode\n-ln logarithmic mode\n-x exponential mode\n-umask unity pbr mask file from metallic (r), ambient (g), smoothness (b), alpha (a)", CS_RESET)
+	fmt.Printf("%sOptions:\n-h\tShow help\n-s\t<float> set scale mapping\n-l\tLog uv mapping calculations to file\n-c\t cubic mode\n-q\t quadratic mode\n-ln logarithmic mode\n-x exponential mode\n-umask unity pbr mask file from metallic (r), ambient (g), smoothness (b), alpha (a)\n-flip <width> <height> <files> creates flipbook texture for 2D texture arrays from files with same width height", CS_RESET)
 }
 
 func main() {
@@ -89,6 +89,27 @@ func main() {
 				output = os.Args[i+5]
 				i = i + 5
 			}
+		case "-flip":
+			mode = tool.MODE_FLIPBOOK
+			//Get arguments (rows,cols,width,height,files,output)
+			var rows, cols, width, height int
+			var err error
+			rows, err = strconv.Atoi(os.Args[i+1])
+			cols, err = strconv.Atoi(os.Args[i+2])
+			width, err = strconv.Atoi(os.Args[i+3])
+			height, err = strconv.Atoi(os.Args[i+4])
+
+			if err != nil {
+				fmt.Printf("%sError: %s\n", CS_RED, err)
+				os.Exit(1)
+			}
+
+			files := make([]string, rows*cols)
+			for j := 0; j < rows*cols; j++ {
+				files[j] = os.Args[i+5+j]
+			}
+			output = os.Args[i+5+rows*cols]
+			tool.CreateFlipbookTextures(rows, cols, height, width, files, output)
 		}
 	}
 

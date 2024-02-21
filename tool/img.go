@@ -23,6 +23,7 @@ const MODE_LINEAR = 2
 const MODE_LOG = 3
 const MODE_EXP = 4
 const MODE_UNITY_MASK = 5
+const MODE_FLIPBOOK = 6
 
 var logEnabled = false
 
@@ -173,6 +174,46 @@ func clamp(x, min, max float64) float64 {
 
 func repeat(x, min, max float64) float64 {
 	return min + math.Mod(x-min, max-min)
+}
+
+func CreateFlipbookTextures(rows int, cols int, height int, width int, files []string, output string) {
+	//Open all images provided
+	images := make([]Image, len(files))
+	for i, file := range files {
+		img, err := OpenImage(file)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		if img.Image.Bounds().Max.X != width || img.Image.Bounds().Min.X != height {
+			log.Fatal("All images must have the same bounds")
+		}
+		images[i] = *img
+	}
+
+	//Create new combined image
+	flipbook := image.NewRGBA(image.Rect(0, 0, width*cols, height*rows))
+
+	//Iterate over all images and combine them into the flipbook
+	for i := 0; i < rows; i++ {
+		for j := 0; j < cols; j++ {
+			img := images[i*cols+j]
+			bounds := img.Image.Bounds()
+			for x := 0; x < bounds.Max.X; x++ {
+				for y := 0; y < bounds.Max.Y; y++ {
+					flipbook.Set(x+j*width, y+i*height, img.Image.At(x, y))
+				}
+			}
+		}
+	}
+
+	img := Image{Image: flipbook, filename: "flipbook.png"}
+
+	//Save the combined image
+	err := img.Save(output)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 
 func CreateUnityDetailMask(metallic_file string, ambient_file string, detail_file string, smoothness_file string, output_file string) {
