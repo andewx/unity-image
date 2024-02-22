@@ -27,30 +27,25 @@ $$ dA = dr^2 \theta $$
 ## installation
 
 ```
-go install github.com/andewx/img2sphere
+go install github.com/andewx/unity-image
 ```
 
-Installs `./img2sphere` in your `/usr/local/bin` `$GOBIN` path
+Installs `./unity-image`, typically your  `/usr/local/bin` or wherever your `$GOBIN` path is assigned.
 
 ## Usage
 
+This tool has some useful options for dealing with textures as assets and formatting them for use in projects. Our tool mapped rectilinear textures to hemisphere projections. But also includes the `unity-mask` pbr tool for combining multiple image channels effortlessly and a `tex2darray` feature which will combine all images in a directory and produce a texture grid which can be passed to different projects.
+
+Unstable Release
 
 
-Once the tool is installed you can use this tool to map rectilinear texturest to hemispheric conformal projections.
-
-```
-./img2sphere [-h] <input_file> <output_file> <options>
-```
-
-Our tool supports three mappings which refer to the equatorial spherical distortion:
+# Hemisphere Projection Options
 
 1. Linear Magnitude projection - where the equatorial distorition is linear [default]
 2. Quadratic - $x^2$ projection [-q]. This will stretch the texture by a factor along its mapped radial
 3. Cubic - $x^3$ projection [-c]
 4. Log - natural log projection [-ln]
 5. Exp - Exponential projection. [-x]
-
-To use simply use any of these options.
 
 ## Options
 
@@ -61,6 +56,8 @@ To use simply use any of these options.
 - q - quadratic mode
 - ln - log mode
 - x - exponential mode
+- tex2darray - Flipbook texture 
+- umask - Creates a mask from multiple grayscale images as channels for an RGBA png image
 
 
 ## Support
@@ -72,5 +69,6 @@ img2sphere inputfile.png example.png -ln
 ```
 
 ![Example](example.png)
+
 
 
