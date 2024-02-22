@@ -51,7 +51,7 @@ Unstable Release
 
 - h - Shows help
 - s (float) - Set scale
-- l - Log uv mapping transforms
+- l - Log tool
 - c - cubic mode
 - q - quadratic mode
 - ln - log mode

@@ -5,7 +5,7 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/andewx/dlxImg/tool"
+	"github.com/andewx/unity-image/tool"
 )
 
 const CS_GREEN = "\033[32m"
@@ -13,13 +13,13 @@ const CS_RESET = "\033[0m"
 const CS_RED = "\033[31m"
 
 func help() {
-	fmt.Printf("%sUsage: dlxImg <options>\n", CS_RED)
+	fmt.Printf("%sUsage: unity-image <options>\n", CS_RED)
 	fmt.Printf("%sImaging editor tools package includes stereographic mapping, and 3D editor PBR mask generation\n", CS_RESET)
-	fmt.Printf("%sOptions:\n-h\tShow help\n-s\t<float> set scale mapping\n-l\tLog uv mapping calculations to file\n-c\t cubic mode\n-q\t quadratic mode\n-ln logarithmic mode\n-x exponential mode\n-umask unity pbr mask file from metallic (r), ambient (g), smoothness (b), alpha (a)\n-tex2darray <width> <height> <dir> <output_file> creates flipbook texture for 2D texture arrays from files with same width height", CS_RESET)
+	fmt.Printf("%sOptions:\n-h\tShow help\n-s\t<float> set scale mapping\n-l\tLog uv mapping calculations to file\n-hemi <input> <output> <options>\n-c\t cubic mode\n-q\t quadratic mode\n-ln logarithmic mode\n-x exponential mode\n-umask <(4)files...> <output_file> pbr mask file from metallic (r), ambient (g), smoothness (b), alpha (a)\n-tex2darray <width> <height> <dir> <output_file> creates flipbook texture for 2D texture arrays from files with same width height", CS_RESET)
 }
 
 func main() {
-	fmt.Printf("%s%s%s\n", CS_GREEN, "dlxImg\n", CS_RESET)
+	fmt.Printf("%s%s%s\n", CS_GREEN, "unity-image\n", CS_RESET)
 	if len(os.Args) < 3 {
 		help()
 		os.Exit(1)
@@ -51,8 +51,8 @@ func main() {
 			}
 		case "-l":
 			tool.EnableLog()
-		case "-c":
-			mode = tool.MODE_CUBIC
+		case "-hemi":
+			mode = tool.MODE_LINEAR
 			if i+2 < len(os.Args) {
 				filename = os.Args[i+1]
 				output = os.Args[i+2]
@@ -60,25 +60,10 @@ func main() {
 			}
 		case "-q":
 			mode = tool.MODE_SQUARE
-			if i+2 < len(os.Args) {
-				filename = os.Args[i+1]
-				output = os.Args[i+2]
-				i = i + 2
-			}
 		case "-ln":
 			mode = tool.MODE_LOG
-			if i+2 < len(os.Args) {
-				filename = os.Args[i+1]
-				output = os.Args[i+2]
-				i = i + 2
-			}
 		case "-x":
 			mode = tool.MODE_EXP
-			if i+2 < len(os.Args) {
-				filename = os.Args[i+1]
-				output = os.Args[i+2]
-				i = i + 2
-			}
 		case "-umask":
 			mode = tool.MODE_UNITY_MASK
 			if i+5 < len(os.Args) {
