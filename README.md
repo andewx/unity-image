@@ -8,6 +8,7 @@ I've updated this as an imaging utility tool as I've worked on projects, this wi
 1. Stereographic Normalization Technique which remaps an image to a sphere UV coordinates
 2. A Unity Mask tool which combines multiple PBR images into a single PNG Metallic (R), Ambient Occlusion (G), Detail Map (B), Smoothness Value (A) for a single RGBA image
 Thanks for visiting, this is a golang utility for working with recti-linear textures and images that we would like to project stereographically with a conformal mapping.
+3. A tool that stitches images in a directory into a texture2Darray
 
 The tool works with a process in unwrapping in blender where we would take the following steps:
 
