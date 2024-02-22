@@ -50,14 +50,21 @@ Unstable Release
 ## Options
 
 - h - Shows help
-- s (float) - Set scale
-- l - Log tool
-- c - cubic mode
-- q - quadratic mode
+--------------------------------------------
+Hyperbolic Projections Tool
+--------------------------------------------
+- hemi <hemi_options> hyperbolic projection
+- s <float_scale> - scales hyperbolic projection
+- l - logs projection coordinates
+- c - cubic projection
+- q - quadratic projection
 - ln - log mode
 - x - exponential mode
-- tex2darray - Flipbook texture 
-- umask - Creates a mask from multiple grayscale images as channels for an RGBA png image
+--------------------------------------------
+Image Operations Tools
+--------------------------------------------
+- tex2darray <rows> <cols> <width> <height> <dir> <output_file> produces flipbook for images of same width height
+- umask <r_file> <g_file> <b_file> <a_file> <output_file> Creates a mask from multiple grayscale images as channels for an RGBA png image
 
 
 ## Support
@@ -65,7 +72,7 @@ Unstable Release
 This project likely will just be issued as is but if there are any suggestions or issues I will gladly handle them.
 
 ```
-img2sphere inputfile.png example.png -ln
+unity-image inputfile.png example.png -ln
 ```
 
 ![Example](example.png)
