@@ -15,7 +15,7 @@ const CS_RED = "\033[31m"
 func help() {
 	fmt.Printf("%sUsage: unity-image <options>\n", CS_RED)
 	fmt.Printf("%sImaging editor tools package includes stereographic mapping, and 3D editor PBR mask generation\n", CS_RESET)
-	fmt.Printf("%sOptions:\n-h\tShow help\n-s\t<float> set scale mapping\n-l\tLog uv mapping calculations to file\n-hemi <input> <output> <options>\n-c\t cubic mode\n-q\t quadratic mode\n-ln logarithmic mode\n-x exponential mode\n-umask <(4)files...> <output_file> pbr mask file from metallic (r), ambient (g), smoothness (b), alpha (a)\n-tex2darray <width> <height> <dir> <output_file> creates flipbook texture for 2D texture arrays from files with same width height", CS_RESET)
+	fmt.Printf("%sOptions:\n-h\tShow help\n-s\t<float> set scale mapping\n-l\tLog uv mapping calculations to file\n-hemi <input> <output> <options>\n-c\t cubic mode\n-q\t quadratic mode\n-ln logarithmic mode\n-x exponential mode\n-umask <(4)files...> <output_file> pbr mask file from metallic (r), ambient (g), smoothness (b), alpha (a)\n-tex2darray <rows> <cols> <width> <height> <dir> <output_file> creates flipbook texture for 2D texture arrays from files with same width height", CS_RESET)
 }
 
 func main() {
@@ -98,15 +98,29 @@ func main() {
 				os.Exit(1)
 			}
 
-			for i, file := range dirFiles {
+			imageCount := 0
+			for _, file := range dirFiles {
 				if file.IsDir() {
 					continue
 				} else {
-					files[i] = dir + "/" + file.Name()
+
+					//If file suffix has .png
+					if len(file.Name()) < 4 {
+						continue
+					}
+
+					if file.Name()[len(file.Name())-4:] == ".png" {
+						if imageCount < len(files) {
+							files[imageCount] = dir + "/" + file.Name()
+							imageCount++
+						}
+					}
 				}
 			}
 			output = os.Args[i+6]
 			tool.CreateFlipbookTextures(rows, cols, height, width, files, output)
+			fmt.Printf("%sFlipbook texture created at path: %s\n", CS_GREEN, output)
+			os.Exit(0)
 		}
 	}
 
@@ -127,7 +141,5 @@ func main() {
 			tool.CreateUnityDetailMask(metallic, ambient, detail, smoothness, output)
 		}
 	}
-
-	fmt.Printf("Saved to %s\n", output)
 
 }

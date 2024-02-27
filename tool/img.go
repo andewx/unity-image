@@ -1,6 +1,7 @@
 package tool
 
 import (
+	"fmt"
 	"image"
 	"image/color"
 	"image/png"
@@ -180,8 +181,10 @@ func CreateFlipbookTextures(rows int, cols int, height int, width int, files []s
 	//Open all images provided
 	images := make([]Image, len(files))
 	for i, file := range files {
+		//Check file suffix .png
 		img, err := OpenImage(file)
 		if err != nil {
+			fmt.Printf("failed to open image file %s %s\n", files[i], err)
 			log.Fatal(err)
 		}
 		/*
