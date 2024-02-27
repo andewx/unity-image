@@ -104,6 +104,10 @@ func main() {
 					continue
 				} else {
 
+					if imageCount >= len(files) {
+						break
+					}
+
 					//If file suffix has .png
 					if len(file.Name()) < 4 {
 						continue
