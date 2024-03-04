@@ -184,8 +184,13 @@ func CreateFlipbookTextures(rows int, cols int, height int, width int, files []s
 		//Check file suffix .png
 		img, err := OpenImage(file)
 		if err != nil {
-			fmt.Printf("failed to open image file %s %s\n", files[i], err)
-			log.Fatal(err)
+			fmt.Printf("failed to open %dth image file %s %s\n", i, files[i], err)
+
+			//list files
+			for _, file := range files {
+				fmt.Println(file)
+			}
+			//log.Default().Println("failed to open", i, "th image file", files[i], err)
 		}
 		/*
 			if img.Image.Bounds().Max.X != width || img.Image.Bounds().Max.Y != height {

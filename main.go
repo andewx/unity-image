@@ -69,8 +69,8 @@ func main() {
 			if i+5 < len(os.Args) {
 				metallic = os.Args[i+1]
 				ambient = os.Args[i+2]
-				detail = os.Args[i+3]
-				smoothness = os.Args[i+4]
+				smoothness = os.Args[i+3]
+				detail = os.Args[i+4]
 				output = os.Args[i+5]
 				i = i + 5
 			}
